@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Store & Order Manager</title>
+    <style>
+        /* Modern Premium Dark & Gold Theme */
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #d4af37; /* Gold */
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: #333333;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin: 0 0 10px 0;
+        }
+
+        .nepali-instruction {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        /* Forms and Panels */
+        .panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            height: fit-content;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background-color: #2b2b2b;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #bfa030;
+        }
+
+        /* Product Display Area */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin: 0 0 10px 0;
+            color: white;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            color: var(--success-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            margin-bottom: 15px;
+        }
+
+        .order-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .order-btn:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>हाम्रो प्रिमियम अनलाइन पसल (Premium Store)</h1>
+        <p style="color: var(--text-muted);">Easily manage products and send instant orders via WhatsApp</p>
+    </header>
+
+    <div class="nepali-instruction">
+        <strong>💡 ग्राहकहरूका लागि निर्देशन (Instructions for Customers):</strong><br>
+        १. आफूलाई मन परेको सामानको <strong>साइज (Size)</strong> र <strong>रंग (Color)</strong> छनोट गर्नुहोस्।<br>
+        २. <strong>"यहाँ अर्डर गर्नुहोस् (Order Now)"</strong> बटनमा क्लिक गर्नुहोस्।<br>
+        ३. क्लिक गर्ने बित्तिकै तपाईंको अर्डर विवरण आफै तयार हुनेछ र हाम्रो आधिकारिक नम्बर <strong>९७४९८९०८४३</strong> मा ह्वाट्सएप (WhatsApp) मार्फत म्यासेज पठाइनेछ।
+    </div>
+
+    <div class="grid">
+        <div class="panel">
+            <h2>नयाँ सामान थप्नुहोस् (Add Item)</h2>
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="pName">सामानको नाम (Product Name):</label>
+                    <input type="text" id="pName" placeholder="उदा: T-Shirt, Shoes..." required>
+                </div>
+                <div class="form-group">
+                    <label for="pPrice">मूल्य (Price in Rs.):</label>
+                    <input type="number" id="pPrice" placeholder="उदा: 1500" required>
+                </div>
+                <div class="form-group">
+                    <label for="pSizes">उपलब्ध साइजहरू (Sizes - Comma Separated):</label>
+                    <input type="text" id="pSizes" placeholder="उदा: S, M, L, XL" required>
+                </div>
+                <div class="form-group">
+                    <label for="pColors">उपलब्ध रंगहरू (Colors - Comma Separated):</label>
+                    <input type="text" id="pColors" placeholder="उदा: Red, Black, Blue" required>
+                </div>
+                <button type="submit">पसलमा सामान थप्नुहोस्</button>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h2>सामानहरू (Available Items)</h2>
+            <div class="products-container" id="productsContainer">
+                <div class="product-card" id="default-prod">
+                    <div>
+                        <h3 class="product-title">Premium Hoodie</h3>
+                        <div class="product-price">Rs. 2,500</div>
+                        
+                        <div class="options-group">
+                            <label>साइज रोज्नुहोस् (Size):</label>
+                            <select id="size-default">
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+                        
+                        <div class="options-group">
+                            <label>रंग रोज्नुहोस् (Color):</label>
+                            <select id="color-default">
+                                <option value="Black">Black</option>
+                                <option value="Navy Blue">Navy Blue</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="order-btn" onclick="sendOrder('Premium Hoodie', '2500', 'default')">यहाँ अर्डर गर्नुहोस् (Order Now)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const productForm = document.getElementById('productForm');
+    const productsContainer = document.getElementById('productsContainer');
+    const targetMobileNumber = "9749890843"; // Your Dedicated Nepali Number
+
+    // Handle Form Submission to add new items dynamically
+    productForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get Input values
+        const name = document.getElementById('pName').value;
+        const price = document.getElementById('pPrice').value;
+        
+        // Split comma-separated inputs into clean arrays
+        const sizes = document.getElementById('pSizes').value.split(',').map(s => s.trim());
+        const colors = document.getElementById('pColors').value.split(',').map(c => c.trim());
+        
+        // Create a unique ID for dynamic drop-downs
+        const productId = 'prod_' + Date.now();
+
+        // Generate HTML structure for size options
+        let sizeOptionsHTML = '';
+        sizes.forEach(size => {
+            sizeOptionsHTML += `<option value="${size}">${size}</option>`;
+        });
+
+        // Generate HTML structure for color options
+        let colorOptionsHTML = '';
+        colors.forEach(color => {
+            colorOptionsHTML += `<option value="${color}">${color}</option>`;
+        });
+
+        // Construct the Product Card
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <div>
+                <h3 class="product-title">${name}</h3>
+                <div class="product-price">Rs. ${parseFloat(price).toLocaleString()}</div>
+                
+                <div class="options-group">
+                    <label>साइज रोज्नुहोस् (Size):</label>
+                    <select id="size-${productId}">
+                        ${sizeOptionsHTML}
+                    </select>
+                </div>
+                
+                <div class="options-group">
+                    <label>रंग रोज्नुहोस् (Color):</label>
+                    <select id="color-${productId}">
+                        ${colorOptionsHTML}
+                    </select>
+                </div>
+            </div>
+            <button class="order-btn" onclick="sendOrder('${name}', '${price}', '${productId}')">यहाँ अर्डर गर्नुहोस् (Order Now)</button>
+        `;
+
+        // Append to the container and reset form
+        productsContainer.appendChild(productCard);
+        productForm.reset();
+    });
+
+    // Function to generate customized message and redirect to WhatsApp
+    function sendOrder(name, price, id) {
+        const selectedSize = document.getElementById(`size-${id}`).value;
+        const selectedColor = document.getElementById(`color-${id}`).value;
+
+        // Structured Nepali & English WhatsApp Order Message
+        const message = `नमस्ते, म यो सामान अर्डर गर्न चाहन्छु!\n\n` + 
+                        `🛍️ सामानको नाम (chasetyu): ${name}\n` +
+                        `💰 मूल्य (Price): Rs. ${price}\n` +
+                        `📏 साइज (Size): ${selectedSize}\n` +
+                        `🎨 रंग (Color): ${selectedColor}\n\n` +
+                        `कृपया मेरो अर्डर कन्फर्म गरिदिनुहोला। धन्यवाद!`;
+
+        // Encode message context safely for URL structure
+        const encodedMessage = encodeURIComponent(message);
+        
+        // WhatsApp API redirect string
+        const whatsappURL = `https://wa.me/${targetMobileNumber}?text=${encodedMessage}`;
+        
+        // Open the WhatsApp chat window with ready-to-send text
+        window.open(whatsappURL, '_blank');
+    }
+</script>
+
+</body>
+</html>
